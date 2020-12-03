@@ -1,10 +1,10 @@
 {
   "app": {
     "name": "subji",
-    "environment": "test",
+    "environment": "localhost",
     "debug": true,
     "defaultLanguage": "en-US",
-    "paymentAPI": "http://localhost:8080/payment"
+    "paymentAPI": "https://dummy-payment-server.herokuapp.com/payment"
   },
   "server": {
     "host": "127.0.0.1",
