@@ -6,6 +6,11 @@ type Plan struct {
 	Cost     float64
 }
 
+// CostPerDay calculates cost per day for the plan.
+func (p *Plan) CostPerDay() float64 {
+	return p.Cost / float64(p.Validity)
+}
+
 // GetPlans gets all available plans (don't want it to be mutable).
 func GetPlans() map[string]Plan {
 	return map[string]Plan{
