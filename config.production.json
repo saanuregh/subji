@@ -1,0 +1,36 @@
+{
+  "app": {
+    "name": "subji",
+    "environment": "production",
+    "debug": false,
+    "defaultLanguage": "en-US",
+    "paymentAPI": "https://dummy-payment-server.herokuapp.com/payment"
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "maintenance": false,
+    "protocol": "http",
+    "domain": "",
+    "port": 8080,
+    "httpsPort": 8081,
+    "timeout": 10,
+    "maxUploadSize": 10,
+    "tls": {
+      "cert": "",
+      "key": ""
+    }
+  },
+  "database": {
+    "connection": "postgres",
+    "host": "postgres",
+    "port": 5432,
+    "name": "subji",
+    "username": "root",
+    "password": "root",
+    "options": "",
+    "maxOpenConnections": 20,
+    "maxIdleConnections": 20,
+    "maxLifetime": 300,
+    "autoMigrate": true
+  }
+}
