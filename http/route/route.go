@@ -11,7 +11,7 @@ import (
 	"github.com/System-Glitch/goyave/v3/cors"
 )
 
-// Register all the application routes. This is the main route registrer.
+// Register all the application routes. This is the main route registerer.
 func Register(router *goyave.Router) {
 
 	// Applying default CORS settings (allow all methods and all origins).

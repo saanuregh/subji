@@ -141,7 +141,7 @@ type GetSubscriptionDateResponse struct {
 	DaysLeft interface{} `json:"days_left"`
 }
 
-// GetSubscriptionDate is a controller handler to get a user's active subcription with day's left with respect to given date.
+// GetSubscriptionDate is a controller handler to get a user's active subscription with day's left with respect to given date.
 func GetSubscriptionDate(response *goyave.Response, request *goyave.Request) {
 	date, err := time.Parse(helper.DateLayout, request.Params["date"])
 	if err != nil {
