@@ -15,7 +15,7 @@ services:
     networks:
       - subji-network
     ports:
-      - "8080:19093"
+      - "19093:8080"
     depends_on:
       - postgres
 networks:
