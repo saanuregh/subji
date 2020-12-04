@@ -41,8 +41,8 @@ func CreateSubscription(response *goyave.Response, request *goyave.Request) {
 
 	result := db.Preload("Subscriptions").First(&user, "username = ?", username)
 	if response.HandleDatabaseError(result) {
-		// Index to keep track of the subscription that is not free/trail and is active
-		// -1 if does not exist (assuming there exist only one/zero not free/trail subscription).
+		// Index to keep track of the subscription that is not free/trial and is active
+		// -1 if does not exist (assuming there exist only one/zero not free/trial subscription).
 		validSubscriptionIdx := -1
 		for i, s := range user.Subscriptions {
 
