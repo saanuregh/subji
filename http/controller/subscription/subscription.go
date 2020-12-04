@@ -1,6 +1,7 @@
 package subscription
 
 import (
+	"fmt"
 	"math"
 	"net/http"
 	"time"
@@ -148,7 +149,14 @@ type GetSubscriptionDateResponse struct {
 func GetSubscriptionDate(response *goyave.Response, request *goyave.Request) {
 	date, err := time.Parse(helper.DateLayout, request.Params["date"])
 	if err != nil {
-		response.Error(err)
+		response.JSON(http.StatusInternalServerError, map[string]interface{}{"error": "The date parameter is invalid."})
+		return
+	}
+	// Ignore input date equal and before current date.
+	if date.Sub(helper.CurrentDate()) < 0 {
+		response.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"error": fmt.Sprintf("The date parameter must be a date after or equal to %s.", helper.CurrentDateString()),
+		})
 		return
 	}
 	user := model.User{}
