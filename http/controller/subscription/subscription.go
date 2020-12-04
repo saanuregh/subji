@@ -74,13 +74,16 @@ func CreateSubscription(response *goyave.Response, request *goyave.Request) {
 		}
 
 		// Try making payment with external API.
-		paymentID, err := helper.MakePayment(username, amount)
-		if err != nil {
-			response.JSON(http.StatusInternalServerError, CreateSubscriptionResponse{
-				Status: "FAILIURE",
-				Error:  "Payment failed",
-			})
-			return
+		paymentID := ""
+		if amount != 0 {
+			var err error
+			if paymentID, err = helper.MakePayment(username, amount); err != nil {
+				response.JSON(http.StatusInternalServerError, CreateSubscriptionResponse{
+					Status: "FAILIURE",
+					Error:  "Payment failed",
+				})
+				return
+			}
 		}
 
 		// If payment successfull, make changes to database.
