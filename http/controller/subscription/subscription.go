@@ -156,6 +156,7 @@ func GetSubscriptionDate(response *goyave.Response, request *goyave.Request) {
 		validSubscriptionIdx := 0
 		maxCost := 0.0
 		daysLeft = "infinity"
+		// Obtains a valid subscription with max cost and positive days left with respect to given date.
 		for i, s := range user.Subscriptions {
 			_daysLeft := int(helper.DaysLeft(s.ValidTill(), date))
 			if availablePlans[s.PlanID].Cost >= maxCost && s.Valid() && _daysLeft > 0 {

@@ -5,7 +5,7 @@ import (
 	"github.com/saanuregh/subji/helper"
 )
 
-// validateSubscriptionPlan custom validation rule for PlanID.
+// validateSubscriptionPlan custom validation rule for PlanID in CreateSubscription request data.
 func validateSubscriptionPlan(field string, value interface{}, parameters []string, form map[string]interface{}) bool {
 	if str, ok := value.(string); ok {
 		if _, exist := helper.GetPlans()[str]; exist {
