@@ -41,8 +41,8 @@ func CreateSubscription(response *goyave.Response, request *goyave.Request) {
 
 	result := db.Preload("Subscriptions").First(&user, "username = ?", username)
 	if response.HandleDatabaseError(result) {
-		// Index to keep track of the subscription that is not free/trial and is active
-		// -1 if does not exist (assuming there exist only one/zero not free/trial subscription).
+		// Index to keep track of the subscription that is not free/trail and is active
+		// -1 if does not exist (assuming there exist only one/zero not free/trail subscription).
 		validSubscriptionIdx := -1
 		for i, s := range user.Subscriptions {
 
@@ -151,23 +151,23 @@ func GetSubscriptionDate(response *goyave.Response, request *goyave.Request) {
 	user := model.User{}
 	result := database.Conn().Preload("Subscriptions").First(&user, "username = ?", request.Params["username"])
 	if response.HandleDatabaseError(result) {
+		var daysLeft interface{}
 		availablePlans := helper.GetPlans()
 		validSubscriptionIdx := 0
 		maxCost := 0.0
+		daysLeft = "infinity"
 		for i, s := range user.Subscriptions {
-			if availablePlans[s.PlanID].Cost >= maxCost && s.Valid() {
+			_daysLeft := int(helper.DaysLeft(s.ValidTill(), date))
+			if availablePlans[s.PlanID].Cost >= maxCost && s.Valid() && _daysLeft > 0 {
 				validSubscriptionIdx = i
 				maxCost = availablePlans[s.PlanID].Cost
+				if s.PlanID != "FREE" {
+					daysLeft = _daysLeft
+				}
 			}
 		}
-		validSubscription := user.Subscriptions[validSubscriptionIdx]
-		var daysLeft interface{}
-		daysLeft = "infinity"
-		if validSubscription.PlanID != "FREE" {
-			daysLeft = int(helper.DaysLeft(validSubscription.ValidTill(), date))
-		}
 		response.JSON(http.StatusOK, GetSubscriptionDateResponse{
-			PlanID:   validSubscription.PlanID,
+			PlanID:   user.Subscriptions[validSubscriptionIdx].PlanID,
 			DaysLeft: daysLeft,
 		})
 	}
